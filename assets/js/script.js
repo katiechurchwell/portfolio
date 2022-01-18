@@ -1,38 +1,36 @@
 var container = document.getElementById("landing-page");
 var containerText = document.getElementById("landing-page-text");
 
-let img;
-
 // dark mode
 // nasa API (mars rover photos too!!)
-var nasaKey = "J9vp32hp1eWAhfieQ2dFCOgJdF9QKrLL0ot4oBYO";
-var nasaQuery = "https://api.nasa.gov/planetary/apod?api_key=" + nasaKey;
+// var nasaKey = "J9vp32hp1eWAhfieQ2dFCOgJdF9QKrLL0ot4oBYO";
+// var nasaQuery = "https://api.nasa.gov/planetary/apod?api_key=" + nasaKey;
 
-function setupNasa(data) {
-  img = loadImage(data, () => {
-    makeDithered(img, 4);
-  });
+let img;
+
+function preload() {
+  img = loadImage('assets/images/test-space.jpeg');
 }
+
 
 function setup() {
   let canvas = createCanvas(windowWidth, windowHeight);
   canvas.parent(container);
 }
 
-const fetchNASAData = async () => {
-  try {
-    const response = await fetch(nasaQuery, {
-      // Access-Control-Allow-Origin: *
-    });
-    const data = await response.json();
-    // setupNasa(data);
-    setupNasa(data.url);
-  } catch (error) {
-    console.log(error);
-  }
-};
+// const fetchNASAData = async () => {
+//   try {
+//     const response = await fetch(nasaQuery, {
+//       mode: 'no-cors'
+//     });
+//     const data = await response.json();
+//     // setupNasa(data);
+//     setupNasa(data.url);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
-fetchNASAData();
 
 //webcam API
 // randomImage = function (webcam) {
