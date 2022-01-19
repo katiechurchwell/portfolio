@@ -18,18 +18,18 @@ function setup() {
   canvas.parent(container);
 }
 
-// const fetchNASAData = async () => {
-//   try {
-//     const response = await fetch(nasaQuery, {
-//       mode: 'no-cors'
-//     });
-//     const data = await response.json();
-//     // setupNasa(data);
-//     setupNasa(data.url);
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
+const fetchNASAData = async () => {
+  try {
+    const response = await fetch(nasaQuery, {
+      mode: 'no-cors'
+    });
+    const data = await response.json();
+    // setupNasa(data);
+    setupNasa(data.url);
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 
 //webcam API
