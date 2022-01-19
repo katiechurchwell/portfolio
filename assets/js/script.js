@@ -3,81 +3,55 @@ var containerText = document.getElementById("landing-page-text");
 
 // dark mode
 // nasa API (mars rover photos too!!)
-// var nasaKey = "J9vp32hp1eWAhfieQ2dFCOgJdF9QKrLL0ot4oBYO";
-// var nasaQuery = "https://api.nasa.gov/planetary/apod?api_key=" + nasaKey;
+var nasaKey = "J9vp32hp1eWAhfieQ2dFCOgJdF9QKrLL0ot4oBYO";
+var nasaQuery = "https://api.nasa.gov/planetary/apod?api_key=" + nasaKey;
 
 let img;
 
-function preload() {
-  img = loadImage('assets/images/test-space.jpeg');
-}
-
+randomImage = function (webcam) {
+  // //random selection
+  // var max = webcam.result.webcams.length;
+  // var i = Math.floor(Math.random() * max);
+  // var imgSrc = webcam.result.webcams[i].image.current.preview;
+  // //subtitle
+  // var imgTitle = webcam.result.webcams[i].title;
+  // var title = document.createElement("div");
+  // title.setAttribute("id", "webcam-title");
+  // title.innerHTML =
+  //   "<p>< Randomly generated live background of the mountains in Oregon. This one happens to be in " +
+  //   imgTitle +
+  //   ".</p>";
+  // containerText.appendChild(title);
+  console.log(webcam.url);
+  imgSrc = webcam.url;
+  var image = document.createElement("img");
+  image.src = imgSrc;
+  container.appendChild(image);
+  //dithering init
+  // img = loadImage(imgSrc, () => {
+  //   makeDithered(img, 4);
+  // });
+};
 
 function setup() {
   let canvas = createCanvas(windowWidth, windowHeight);
   canvas.parent(container);
-}
+  //webcam API
+  let headers = {};
+  Object.assign(headers, { method: "GET" });
+  Object.assign(headers, { mode: "cors" });
+  Object.assign(headers, {
+    "Access-Control-Allow-Origin": "https://apod.nasa.gov",
+  });
 
-const fetchNASAData = async () => {
-  try {
-    const response = await fetch(nasaQuery, {
-      mode: 'no-cors'
+  fetch(nasaQuery, {
+    headers: headers,
+  }).then(function (response) {
+    response.json().then(function (webcam) {
+      randomImage(webcam);
     });
-    const data = await response.json();
-    // setupNasa(data);
-    setupNasa(data.url);
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-
-//webcam API
-// randomImage = function (webcam) {
-//   //random selection
-//   var max = webcam.result.webcams.length;
-//   var i = Math.floor(Math.random() * max);
-//   var imgSrc = webcam.result.webcams[i].image.current.preview;
-//   //subtitle
-//   var imgTitle = webcam.result.webcams[i].title;
-//   var title = document.createElement("div");
-//   title.setAttribute("id", "webcam-title");
-//   title.innerHTML =
-//     "<p>< Randomly generated live background of the mountains in Oregon. This one happens to be in " +
-//     imgTitle +
-//     ".</p>";
-//   containerText.appendChild(title);
-//   //dithering init
-//   img = loadImage(imgSrc, () => {
-//     makeDithered(img, 4);
-//   });
-// };
-
-// function setup() {
-//   let canvas = createCanvas(windowWidth, windowHeight);
-//   canvas.parent(container);
-// }
-
-//   //webcam API
-//   fetch(
-//     "https://api.windy.com/api/webcams/v2/list/category=mountain/region=US.OR?show=webcams:image",
-//     {
-//       method: "GET",
-//       headers: {
-//         "x-windy-key": "fRBdejZXV9tukKAYkPngOtGOg0bYrvV9",
-//       },
-//     }
-//   )
-// .then(function (response) {
-//   img = loadImage(imgSrc, () => {
-//     makeDithered(img, 4);
-//   });
-
-//     response.json().then(function (webcam) {
-//       randomImage(webcam);
-//     });
-//   });
-// }
+  });
+}
 
 function draw() {
   if (img) {
@@ -162,7 +136,3 @@ function addError(img, factor, x, y, errR, errG, errB) {
 
   setColorAtIndex(img, x, y, clr);
 }
-
-//time
-var today = new Date();
-var time = today.getHours();

@@ -1,0 +1,20 @@
+{
+  "name": "personal-site",
+  "version": "1.0.0",
+  "description": "Hello! Welcome to my personal site. This space will eventually be polished up and used professionally but for now it's a frankensteined mess of things I'm trying out when I have the time.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/katiechurchwell/portfolio.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/katiechurchwell/portfolio/issues"
+  },
+  "homepage": "https://github.com/katiechurchwell/portfolio#readme"
+}
