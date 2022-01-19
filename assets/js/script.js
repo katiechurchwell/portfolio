@@ -1,8 +1,7 @@
 var container = document.getElementById("landing-page");
 var containerText = document.getElementById("landing-page-text");
 
-// dark mode
-// nasa API (mars rover photos too!!)
+//API variables
 var nasaKey = "J9vp32hp1eWAhfieQ2dFCOgJdF9QKrLL0ot4oBYO";
 var nasaQuery = "https://api.nasa.gov/planetary/apod?api_key=" + nasaKey;
 
@@ -24,34 +23,32 @@ randomImage = function (webcam) {
   // containerText.appendChild(title);
   console.log(webcam.url);
   imgSrc = webcam.url;
-  var image = document.createElement("img");
-  image.src = imgSrc;
-  container.appendChild(image);
-  //dithering init
-  // img = loadImage(imgSrc, () => {
-  //   makeDithered(img, 4);
-  // });
+  // var image = document.createElement("img");
+  // image.src = imgSrc;
+  // container.appendChild(image);
+  img = loadImage(imgSrc, () => {
+    makeDithered(img, 4);
+  });
 };
 
 function setup() {
   let canvas = createCanvas(windowWidth, windowHeight);
   canvas.parent(container);
-  //webcam API
-  let headers = {};
-  Object.assign(headers, { method: "GET" });
-  Object.assign(headers, { mode: "cors" });
-  Object.assign(headers, {
-    "Access-Control-Allow-Origin": "https://apod.nasa.gov",
-  });
-
-  fetch(nasaQuery, {
-    headers: headers,
-  }).then(function (response) {
-    response.json().then(function (webcam) {
-      randomImage(webcam);
-    });
-  });
 }
+
+// https://sophiali.dev/javascript-fetch-api-with-nasa-api
+const fetchNASAData = async () => {
+  try {
+    const response = await fetch(nasaQuery);
+    const data = await response.json();
+    console.log("NASA APOD data", data);
+    randomImage(data);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+fetchNASAData();
 
 function draw() {
   if (img) {
